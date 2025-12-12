@@ -1,0 +1,78 @@
+/* ==================== CSS Variables & Global Resets ==================== */
+
+/* 全局样式重置 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ============ 响应式缩放系统 - CSS 自定义属性 ============ */
+:root {
+    /* 桌面端默认值（保持原样式）*/
+    --seat-width: 120px;
+    --seat-height: 60px;
+    --seat-font-size: 1.7rem;
+    --seat-gap: 16px;
+
+    /* 按钮尺寸 - 桌面端 */
+    --btn-font-size: 0.875rem;
+    --btn-padding-v: 0.5rem;
+    --btn-padding-h: 1rem;
+
+    /* 容器间距 - 桌面端 */
+    --container-padding: 4% 3% 1% 3%;
+    --grid-gap: 1rem;
+
+    /* 字体尺寸 - 桌面端 */
+    --font-size-h1: 1.3rem;
+    --font-size-base: 0.875rem;
+    --font-size-small: 0.7rem;
+
+    /* 性别颜色变量 */
+    --male-color: #2563eb;
+    --female-color: #ec4899;
+}
+
+/* 移动端变量覆盖已移至 mobile.css，此处不再定义 */
+
+/* 消除触摸延迟 - 优化触摸行为 */
+a, button, input, select, textarea, label, .btn, .student-item, .color-swatch {
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+}
+
+/* 座位元素:完全禁用浏览器触摸行为,由JS处理 */
+.seat {
+    -webkit-touch-callout: none !important; /* 禁用iOS长按菜单 */
+    touch-action: none !important;  /* 完全禁用浏览器触摸手势 */
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f5f5f5;
+    overflow-x: hidden;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}

@@ -1,0 +1,826 @@
+/* ==================== A4纸打印优化样式 ==================== */
+@media print {
+    /* 设置A4纸张尺寸和边距 - 横向打印 */
+    @page {
+        size: A4 landscape; /* A4横向 */
+        margin: 0; /* 去掉默认边距，避免页眉页脚 */
+    }
+
+    /* 横向打印尺寸：297mm × 210mm */
+    html, body {
+        width: 297mm !important;
+        height: 210mm !important;
+        overflow: hidden !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    /* 重置页面布局 */
+    body {
+        background: white;
+        margin: 0;
+        padding: 0;
+        display: block;
+        page-break-after: avoid !important;
+        page-break-before: avoid !important;
+        page-break-inside: avoid !important;
+    }
+
+    /* 隐藏不需要打印的元素 */
+    .header,
+    .orientation-warning,
+    .sidebar-left,
+    .panel-actions,
+    .student-controls,
+    .student-stats,
+    .classroom-header,
+    .btn,
+    .seat-remove-btn,
+    .seat-delete-btn,
+    .multi-select-toolbar,
+    .layout-settings-dropdown,
+    .modal,
+    .pdf-action-bar,
+    button {
+        display: none !important;
+    }
+
+    /* 主容器调整 */
+    .main-container {
+        display: flex !important;
+        flex-direction: column !important;
+        grid-template-columns: none !important;
+        max-width: 100%;
+        width: 297mm !important;
+        height: 210mm !important;
+        padding: 0;
+        margin: 0;
+        align-items: center !important;
+        justify-content: center !important;
+        page-break-inside: avoid !important;
+        page-break-after: avoid !important;
+        page-break-before: avoid !important;
+        overflow: hidden !important;
+    }
+
+    /* 主内容区域 */
+    .main-content {
+        display: flex !important;
+        flex-direction: column !important;
+        box-shadow: none;
+        border-radius: 0;
+        overflow: visible;
+        margin: 0;
+        padding: 0;
+        page-break-inside: avoid !important;
+        page-break-after: avoid !important;
+        page-break-before: avoid !important;
+        width: 100%;
+        height: 100%;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+    .classroom-container {
+        display: flex !important;
+        flex-direction: column !important;
+        padding: 0;
+        height: auto;
+        overflow: visible;
+        width: 100%;
+        position: relative;
+        align-items: center !important;
+        justify-content: center !important;
+        page-break-inside: avoid !important;
+        page-break-after: avoid !important;
+        page-break-before: avoid !important;
+    }
+
+    /* 座位图打印样式 - 横向直接显示，无需旋转 */
+    .classroom-grid {
+        /* A4横向纸：297mm × 210mm */
+        display: grid !important;
+        visibility: visible !important;
+        width: fit-content !important;
+        max-width: 100% !important;
+        height: auto !important;
+        max-height: 100% !important;
+        min-height: auto !important;
+        margin: 0 auto !important;
+        padding: 8px !important;
+        background: white !important;
+        border: 2px solid #333 !important;
+        border-radius: 8px;
+
+        /* 移除旋转 - 横向打印无需旋转 */
+        transform: none !important;
+        transform-origin: center center !important;
+
+        /* 移除固定宽高比 */
+        aspect-ratio: auto !important;
+
+        /* 强制在一页内显示 - 防止分页 */
+        page-break-inside: avoid !important;
+        page-break-after: avoid !important;
+        page-break-before: avoid !important;
+
+        /* 调整间距 */
+        gap: 4px !important;
+        row-gap: 4px !important;
+        column-gap: 4px !important;
+
+        /* 确保内容适应单页 */
+        overflow: visible !important;
+    }
+
+    /* 座位打印样式 - 横向布局 - 更长的座位框更美观 */
+    .seat {
+        display: flex !important;
+        flex-direction: column !important;
+        visibility: visible !important;
+        /* 默认尺寸：适合6-8列 - 加长座位框 */
+        width: 105px !important;
+        height: 52px !important;
+        min-width: 105px !important;
+        min-height: 52px !important;
+        padding: 3px 6px !important;
+        border: 1px solid #333 !important;
+        border-radius: 4px;
+        background: white !important;
+        page-break-inside: avoid !important;
+        page-break-after: avoid !important;
+        page-break-before: avoid !important;
+        align-items: center !important;
+        justify-content: center !important;
+        box-sizing: border-box !important;
+        position: relative !important;
+    }
+
+    /* 打印模式 - 备注水印样式 */
+    .seat-notes-watermark {
+        position: absolute !important;
+        top: 0 !important;
+        bottom: 0 !important;
+        right: 2px !important;
+        margin: auto 0 !important;
+        transform: none !important;
+        font-size: 0.45rem !important;
+        font-weight: bold !important;
+        color: rgba(0, 0, 0, 0.3) !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        writing-mode: horizontal-tb !important;
+        letter-spacing: 0 !important;
+        line-height: 1.1 !important;
+        white-space: normal !important;
+        width: auto !important;
+        height: fit-content !important;
+        max-height: none !important;
+        overflow: visible !important;
+        z-index: 1 !important;
+    }
+
+    .seat-notes-watermark span {
+        display: block !important;
+        text-align: center !important;
+    }
+
+    /* 9-10列：缩小座位 - 保持长宽比 */
+    .classroom-grid.cols-9-10 .seat {
+        width: 85px !important;
+        height: 44px !important;
+        min-width: 85px !important;
+        min-height: 44px !important;
+        padding: 2px 5px !important;
+    }
+
+    /* 2字和3字名字使用相同字号 */
+    .classroom-grid.cols-9-10 .student-name-display.name-2,
+    .classroom-grid.cols-9-10 .student-name-display.name-3 {
+        font-size: 1.4rem !important;
+    }
+
+    .classroom-grid.cols-9-10 .student-name-display.name-4 {
+        font-size: 1.3rem !important;
+    }
+
+    .classroom-grid.cols-9-10 .student-name-display.name-5 {
+        font-size: 1.1rem !important;
+    }
+
+    .classroom-grid.cols-9-10 .student-name-display.name-6,
+    .classroom-grid.cols-9-10 .student-name-display.name-7,
+    .classroom-grid.cols-9-10 .student-name-display.name-8-plus {
+        font-size: 1.0rem !important;
+    }
+
+    /* 11-12列：进一步缩小 - 保持长宽比 */
+    .classroom-grid.cols-11-12 .seat {
+        width: 72px !important;
+        height: 38px !important;
+        min-width: 72px !important;
+        min-height: 38px !important;
+        padding: 2px 4px !important;
+    }
+
+    /* 2字和3字名字使用相同字号 */
+    .classroom-grid.cols-11-12 .student-name-display.name-2,
+    .classroom-grid.cols-11-12 .student-name-display.name-3 {
+        font-size: 1.2rem !important;
+    }
+
+    .classroom-grid.cols-11-12 .student-name-display.name-4 {
+        font-size: 1.1rem !important;
+    }
+
+    .classroom-grid.cols-11-12 .student-name-display.name-5,
+    .classroom-grid.cols-11-12 .student-name-display.name-6,
+    .classroom-grid.cols-11-12 .student-name-display.name-7,
+    .classroom-grid.cols-11-12 .student-name-display.name-8-plus {
+        font-size: 1.0rem !important;
+    }
+
+    .seat-occupied {
+        display: flex !important;
+        visibility: visible !important;
+        background: white !important;
+        border-color: #333 !important;
+    }
+
+    .seat-empty {
+        display: flex !important;
+        visibility: visible !important;
+        background: #f5f5f5 !important;
+        border-color: #999 !important;
+        border-style: dashed !important;
+    }
+
+    /* 学生姓名打印样式 - 横向显示 */
+    .seat .student-name-display {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        visibility: visible !important;
+        color: #000 !important;
+        font-size: 2.0rem !important;  /* 适配座位框大小 */
+        font-weight: 900 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        line-height: 1 !important;
+
+        /* 横向显示 - 允许换行以完整显示名字 */
+        writing-mode: horizontal-tb !important;
+        text-orientation: mixed !important;
+        letter-spacing: 0.05em !important;
+        width: 100% !important;
+        height: 100% !important;
+        overflow: visible !important;
+        white-space: normal !important;
+        word-break: keep-all !important;
+        text-align: center !important;
+        position: static !important;
+        transform: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    /* 针对不同姓名长度的字体大小优化 */
+    /* 2字和3字名字使用相同字号 */
+    .seat .student-name-display.name-2,
+    .seat .student-name-display.name-3 {
+        font-size: 1.7rem !important;
+    }
+
+    .seat .student-name-display.name-4 {
+        font-size: 1.4rem !important;
+    }
+
+    .seat .student-name-display.name-5 {
+        font-size: 1.2rem !important;
+    }
+
+    .seat .student-name-display.name-6 {
+        font-size: 1.0rem !important;
+    }
+
+    .seat .student-name-display.name-7 {
+        font-size: 0.9rem !important;
+    }
+
+    .seat .student-name-display.name-8-plus {
+        font-size: 0.8rem !important;
+    }
+
+    /* 保持性别颜色（使用用户自定义颜色） */
+    .seat-occupied.male .student-name-display {
+        color: var(--male-color) !important;
+    }
+
+    .seat-occupied.female .student-name-display {
+        color: var(--female-color) !important;
+    }
+
+    /* 座位编号打印样式 - 默认隐藏，但可通过 hide-coordinates 类控制 */
+    /* 仅当没有 hide-coordinates 类时才显示 */
+    .classroom-grid:not(.hide-coordinates) .seat-number {
+        display: block !important;
+        position: absolute !important;
+        top: 1px !important;
+        left: 1px !important;
+        color: #333 !important;
+        background-color: rgba(255, 255, 255, 0.8) !important;
+        font-size: 0.5rem !important;
+        font-weight: 700 !important;
+        padding: 1px 2px !important;
+        border-radius: 1px !important;
+        z-index: 1 !important;
+        line-height: 1 !important;
+    }
+
+    /* 默认隐藏（当有 hide-coordinates 类时） */
+    .classroom-grid.hide-coordinates .seat-number {
+        display: none !important;
+    }
+
+    /* 讲台打印样式 - 居中显示 */
+    .podium-in-grid {
+        display: flex !important;
+        visibility: visible !important;
+        justify-content: center !important;
+        align-items: center !important;
+        padding: 8px 0 !important;
+        margin: 8px 0 0 0 !important;
+        page-break-inside: avoid !important;
+        page-break-after: avoid !important;
+        page-break-before: avoid !important;
+        grid-column: 1 / -1 !important;
+    }
+
+    .podium-shape {
+        display: flex !important;
+        visibility: visible !important;
+        width: 200px !important;
+        height: 48px !important;
+        background: #666 !important;
+        border: 1.5px solid #333 !important;
+        border-radius: 6px !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+    .podium-text {
+        display: block !important;
+        visibility: visible !important;
+        color: white !important;
+        font-size: 1.1rem !important;
+        font-weight: 700 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    /* 确保颜色正确打印 */
+    * {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    /* 移除不必要的阴影和效果 */
+    .seat,
+    .classroom-grid,
+    .podium-shape {
+        box-shadow: none !important;
+    }
+
+    /* 全局防止分页规则 - 确保所有内容在一页内 */
+    * {
+        page-break-inside: avoid !important;
+    }
+
+    /* 强制打印为单页 */
+    html {
+        height: 100%;
+        max-height: 210mm;
+        overflow: hidden;
+    }
+}
+
+/* ==================== PDF导出模式 - 使用与打印相同的样式 ==================== */
+/* 当 body 添加 pdf-export-mode class 时，应用以下样式 */
+/* 注意：必须使用 !important 覆盖 mobile.css 中的样式 */
+
+body.pdf-export-mode {
+    background: white !important;
+    overflow: visible !important;
+    /* 横向 A4 尺寸：297mm × 210mm */
+    width: 297mm !important;
+    height: 210mm !important;
+    min-height: 210mm !important;
+    max-width: none !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+}
+
+body.pdf-export-mode .header,
+body.pdf-export-mode .sidebar-left,
+body.pdf-export-mode .panel-actions,
+body.pdf-export-mode .student-controls,
+body.pdf-export-mode .student-stats,
+body.pdf-export-mode .classroom-header,
+body.pdf-export-mode .btn,
+body.pdf-export-mode .seat-remove-btn,
+body.pdf-export-mode .seat-delete-btn,
+body.pdf-export-mode .multi-select-toolbar,
+body.pdf-export-mode .layout-settings-dropdown,
+body.pdf-export-mode .modal,
+body.pdf-export-mode .orientation-warning,
+body.pdf-export-mode button {
+    display: none !important;
+}
+
+body.pdf-export-mode .main-container {
+    display: flex !important;
+    flex-direction: column !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: visible !important;
+    box-sizing: border-box !important;
+    position: relative !important;
+}
+
+body.pdf-export-mode .main-content {
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    overflow: visible !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+}
+
+body.pdf-export-mode .classroom-container {
+    padding: 0 !important;
+    height: auto !important;
+    min-height: auto !important;
+    overflow: visible !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important; /* 改为stretch，让子元素可以自定义对齐 */
+    justify-content: flex-start !important; /* 从顶部开始排列 */
+    width: 100% !important;
+    max-width: 100% !important;
+    position: relative !important;
+    box-sizing: border-box !important;
+}
+
+body.pdf-export-mode .classroom-grid {
+    /* 横向 A4 适配尺寸 */
+    width: auto !important;
+    max-width: 27cm !important;
+    height: auto !important;
+    max-height: none !important;
+    min-height: auto !important;
+    /* 关键：左右居中，上下也要自动 */
+    margin: auto !important;
+    padding: 0.4cm !important;
+    background: white !important;
+    border: 2px solid #333 !important;
+    border-radius: 6px !important;
+
+    /* 移除旋转 - 横向显示无需旋转 */
+    transform: none !important;
+
+    /* 移除移动端的自适应设置 */
+    aspect-ratio: auto !important;
+
+    /* 固定间距 */
+    gap: 6px !important;
+    row-gap: 6px !important;
+    column-gap: 6px !important;
+
+    /* 确保可见 */
+    overflow: visible !important;
+    box-sizing: border-box !important;
+
+    /* 覆盖移动端的 grid-auto-rows */
+    grid-auto-rows: auto !important;
+
+    /* 确保宽度合理分布 */
+    display: grid !important;
+}
+
+body.pdf-export-mode .seat {
+    /* 桌面端座位尺寸 - 加长座位框更美观 */
+    width: 110px !important;
+    height: 52px !important;
+    min-width: 110px !important;
+    max-width: 110px !important;
+    min-height: 52px !important;
+    max-height: 52px !important;
+    padding: 2px !important; /* 减少内边距，让 Flexbox 控制居中 */
+    border: 1.5px solid #333 !important;
+    border-radius: 4px !important;
+    background: white !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    overflow: visible !important;
+    box-sizing: border-box !important;
+    aspect-ratio: auto !important;
+    position: relative !important;
+}
+
+/* PDF导出模式 - 备注水印样式 */
+body.pdf-export-mode .seat-notes-watermark {
+    position: absolute !important;
+    top: 2px !important;
+    right: 2px !important;
+    bottom: 2px !important;
+    left: auto !important;
+    transform: none !important;
+    font-size: 8px !important;
+    font-weight: bold !important;
+    color: rgba(0, 0, 0, 0.3) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    writing-mode: horizontal-tb !important;
+    letter-spacing: 0 !important;
+    line-height: 1.1 !important;
+    word-break: keep-all !important;
+    word-wrap: normal !important;
+    overflow-wrap: normal !important;
+    width: 12px !important;
+    min-width: 12px !important;
+    max-width: 12px !important;
+    overflow: visible !important;
+    z-index: 1 !important;
+    pointer-events: none !important;
+}
+
+body.pdf-export-mode .seat-notes-watermark span {
+    display: block !important;
+    text-align: center !important;
+    width: 100% !important;
+}
+
+/* PDF导出模式 - 9-10列缩小 - 保持长宽比 */
+body.pdf-export-mode .classroom-grid.cols-9-10 .seat {
+    width: 86px !important;
+    height: 42px !important;
+    min-width: 86px !important;
+    max-width: 86px !important;
+    min-height: 42px !important;
+    max-height: 42px !important;
+    padding: 3px 6px !important;
+}
+
+body.pdf-export-mode .classroom-grid.cols-9-10 .student-name-display {
+    line-height: 42px !important;
+    height: 42px !important;
+}
+
+/* 2字和3字名字使用相同字号 */
+body.pdf-export-mode .classroom-grid.cols-9-10 .student-name-display.name-2,
+body.pdf-export-mode .classroom-grid.cols-9-10 .student-name-display.name-3 {
+    font-size: 1.5rem !important;
+}
+
+body.pdf-export-mode .classroom-grid.cols-9-10 .student-name-display.name-4 {
+    font-size: 1.3rem !important;
+}
+
+body.pdf-export-mode .classroom-grid.cols-9-10 .student-name-display.name-5 {
+    font-size: 1.1rem !important;
+}
+
+body.pdf-export-mode .classroom-grid.cols-9-10 .student-name-display.name-6,
+body.pdf-export-mode .classroom-grid.cols-9-10 .student-name-display.name-7,
+body.pdf-export-mode .classroom-grid.cols-9-10 .student-name-display.name-8-plus {
+    font-size: 1.0rem !important;
+}
+
+/* PDF导出模式 - 11-12列进一步缩小 - 保持长宽比 */
+body.pdf-export-mode .classroom-grid.cols-11-12 .seat {
+    width: 72px !important;
+    height: 36px !important;
+    min-width: 72px !important;
+    max-width: 72px !important;
+    min-height: 36px !important;
+    max-height: 36px !important;
+    padding: 3px 5px !important;
+}
+
+body.pdf-export-mode .classroom-grid.cols-11-12 .student-name-display {
+    line-height: 36px !important;
+    height: 36px !important;
+}
+
+/* 2字和3字名字使用相同字号 */
+body.pdf-export-mode .classroom-grid.cols-11-12 .student-name-display.name-2,
+body.pdf-export-mode .classroom-grid.cols-11-12 .student-name-display.name-3 {
+    font-size: 1.2rem !important;
+}
+
+body.pdf-export-mode .classroom-grid.cols-11-12 .student-name-display.name-4 {
+    font-size: 1.1rem !important;
+}
+
+body.pdf-export-mode .classroom-grid.cols-11-12 .student-name-display.name-5,
+body.pdf-export-mode .classroom-grid.cols-11-12 .student-name-display.name-6,
+body.pdf-export-mode .classroom-grid.cols-11-12 .student-name-display.name-7,
+body.pdf-export-mode .classroom-grid.cols-11-12 .student-name-display.name-8-plus {
+    font-size: 1.0rem !important;
+}
+
+body.pdf-export-mode .seat-occupied {
+    background: white !important;
+    border-color: #333 !important;
+}
+
+body.pdf-export-mode .seat-empty {
+    background: #f5f5f5 !important;
+    border-color: #999 !important;
+    border-style: dashed !important;
+}
+
+body.pdf-export-mode .student-name-display {
+    display: block !important;
+    color: #000 !important;
+    font-size: 1.9rem !important;  /* 稍微调小，增加留白，更美观 */
+    font-weight: 900 !important;
+    line-height: 52px !important;   /* 与座位高度一致，实现垂直居中 */
+    writing-mode: horizontal-tb !important;
+    text-orientation: mixed !important;
+    letter-spacing: 0.02em !important; /* 微调字间距 */
+    width: 100% !important;
+    height: 52px !important;
+    max-width: 100% !important;
+    margin: 0 !important;          /* 确保无外边距干扰居中 */
+    padding: 0 !important;
+    overflow: visible !important;
+    white-space: nowrap !important; /* 防止意外换行 */
+    word-break: keep-all !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    transform: none !important;
+    text-align: center !important;
+}
+
+/* 2字和3字名字使用相同字号 */
+body.pdf-export-mode .student-name-display.name-2,
+body.pdf-export-mode .student-name-display.name-3 {
+    font-size: 1.6rem !important;
+}
+
+body.pdf-export-mode .student-name-display.name-4 {
+    font-size: 1.4rem !important;
+}
+
+body.pdf-export-mode .student-name-display.name-5 {
+    font-size: 1.2rem !important;
+}
+
+body.pdf-export-mode .student-name-display.name-6 {
+    font-size: 1.0rem !important;
+}
+
+body.pdf-export-mode .student-name-display.name-7 {
+    font-size: 0.9rem !important;
+}
+
+body.pdf-export-mode .student-name-display.name-8-plus {
+    font-size: 0.8rem !important;
+}
+
+/* 保持性别颜色（使用用户自定义颜色） */
+body.pdf-export-mode .seat-occupied.male .student-name-display {
+    color: var(--male-color) !important;
+}
+
+body.pdf-export-mode .seat-occupied.female .student-name-display {
+    color: var(--female-color) !important;
+}
+
+/* PDF导出模式 - 座位编号显示逻辑 */
+/* 仅当没有 hide-coordinates 类时才显示 */
+body.pdf-export-mode .classroom-grid:not(.hide-coordinates) .seat-number {
+    display: block !important;
+    position: absolute !important;
+    top: 1px !important;
+    left: 1px !important;
+    color: #333 !important;
+    background-color: rgba(255, 255, 255, 0.8) !important;
+    font-size: 0.5rem !important;
+    font-weight: 700 !important;
+    padding: 1px 2px !important;
+    border-radius: 1px !important;
+    z-index: 1 !important;
+    line-height: 1 !important;
+}
+
+/* 默认隐藏（当有 hide-coordinates 类时） */
+body.pdf-export-mode .classroom-grid.hide-coordinates .seat-number {
+    display: none !important;
+}
+
+body.pdf-export-mode .podium-in-grid {
+    padding: 1% !important;
+    margin: 0.5% 0 0 0 !important;
+}
+
+body.pdf-export-mode .podium-shape {
+    width: 200px !important;
+    height: 48px !important;
+    background: #666 !important;
+    border: 1.5px solid #333 !important;
+    border-radius: 6px !important;
+}
+
+body.pdf-export-mode .podium-text {
+    color: white !important;
+    font-size: 1.1rem !important;
+    font-weight: 700 !important;
+}
+
+body.pdf-export-mode .seat,
+body.pdf-export-mode .classroom-grid,
+body.pdf-export-mode .podium-shape {
+    box-shadow: none !important;
+}
+
+/* ==================== 打印页脚样式 (排座宝水印) ==================== */
+
+/* 1. 物理打印时的样式 (Ctrl+P) */
+@media print {
+    .print-footer {
+        display: flex !important;
+        flex-direction: column !important;
+        position: fixed !important;
+        bottom: 5mm !important;
+        left: 5mm !important;
+        z-index: 9999 !important;
+        color: #aaa !important; /* 浅灰色 */
+        text-align: left !important;
+        line-height: 1.2 !important;
+        opacity: 0.7 !important;
+    }
+
+    .print-brand {
+        font-size: 8pt !important;
+        font-weight: normal !important;
+    }
+
+    .print-url {
+        font-size: 6pt !important;
+        font-family: sans-serif !important;
+    }
+}
+
+/* 2. PDF导出/图片保存时的样式 (html2canvas截图) */
+body.pdf-export-mode .print-footer {
+    /* 截图时先隐藏，通过JS单独截取并放置在PDF左下角 */
+    display: none !important;
+    
+    /* 保留原有样式供JS单独截图时使用（虽然JS截图时可能不会直接用到这个类，但为了保险保留结构） */
+    flex-direction: column !important;
+    position: relative !important; 
+    align-self: flex-start !important;
+    margin: 0 !important;
+    padding: 5px !important;
+    z-index: 999 !important;
+    color: #aaa !important;
+    text-align: left !important;
+    line-height: 1.2 !important;
+    opacity: 0.7 !important;
+    background: transparent !important;
+    width: auto !important;
+    height: auto !important;
+}
+
+body.pdf-export-mode .print-brand {
+    font-size: 10px !important;
+    font-weight: normal !important;
+}
+
+body.pdf-export-mode .print-url {
+    font-size: 8px !important;
+    font-family: sans-serif !important;
+}

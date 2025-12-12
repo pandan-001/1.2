@@ -1,0 +1,1640 @@
+/* ==================== Mobile & Tablet Responsive Styles ==================== */
+
+/* ==================== 移动端强制修复 - 最高优先级 ==================== */
+/* 这些样式使用 !important 覆盖 desktop.css 的干扰 */
+
+@media (max-width: 1023px) {
+    /* 全局禁止横向滚动 */
+    body {
+        overflow-x: hidden !important;
+        max-width: 100vw !important;
+    }
+
+    /* 主容器 */
+    .main-container {
+        overflow-x: hidden !important;
+        max-width: 100vw !important;
+        box-sizing: border-box !important;
+    }
+
+    /* 主内容区域 - 禁止横向滚动 */
+    .main-content {
+        width: 100% !important;
+        max-width: 100vw !important;
+        overflow-x: hidden !important;
+        overflow-y: auto !important;
+        box-sizing: border-box !important;
+    }
+
+    /* 教室容器 - 禁止横向滚动，使用flexbox垂直布局 */
+    .classroom-container {
+        width: 100% !important;
+        max-width: 100vw !important;
+        overflow: hidden !important;
+        box-sizing: border-box !important;
+        display: flex !important;
+        flex-direction: column !important;
+        padding: clamp(4px, 1vw, 8px) !important;
+    }
+
+    /* 网格容器修复 */
+    .classroom-grid {
+        display: grid !important;
+        /* 强制填满宽度，不溢出 */
+        width: 100% !important;
+        height: 100% !important;
+        max-height: 100% !important;
+        min-height: 0 !important; /* 覆盖 desktop.css 可能存在的最小高度 */
+
+        /* 紧凑间距 */
+        gap: 4px !important;
+        padding: 4px !important;
+
+        /* 移除内联样式可能带来的干扰 */
+        aspect-ratio: auto !important;
+        overflow: hidden !important;
+        box-sizing: border-box !important;
+
+        /* 关键：确保行列自适应，不被内容撑开 */
+        grid-auto-rows: minmax(0, 1fr) !important;
+    }
+
+    /* 座位修复 */
+    .seat {
+        /* 强制重置宽高，完全由 Grid 轨道决定 */
+        width: auto !important;
+        height: auto !important;
+        min-width: 0 !important;
+        min-height: 0 !important;
+
+        /* 移除固定的宽高比，让其填充 Grid 单元格 */
+        aspect-ratio: unset !important;
+
+        /* 布局调整 */
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        align-items: center !important;
+        padding: 0 !important;
+        margin: 0 !important;
+
+        /* 确保内容不溢出 - 修改为 visible 以允许名字完整显示 */
+        overflow: visible !important;
+        box-sizing: border-box !important;
+    }
+
+    /* PDF导出模式下座位样式修正 */
+    body.pdf-export-mode .seat {
+        overflow: visible !important;
+    }
+
+    /* 名字显示区域修复 - 核心修复点 */
+    .seat .student-name-display {
+        position: static !important; /* 移除绝对定位，防止脱离文档流 */
+        transform: none !important;
+
+        /* 强制文字缩放与截断 */
+        width: 100% !important;
+        max-width: 100% !important;
+
+        /* 恢复不换行，使用字号调整策略 */
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: clip !important; /* 避免省略号占用空间，尽可能显示更多文字 */
+        
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        height: 100% !important;
+        padding: 0 1px !important;
+
+        /* 默认字体大小 (1-2个字) */
+        font-size: clamp(0.8rem, 3.5vw, 1.1rem) !important;
+        line-height: 1.2 !important;
+    }
+
+    /* 针对不同名字长度的字体大小调整 - 移动端适配 */
+    .seat .student-name-display.name-2 {
+        font-size: clamp(0.7rem, 3.0vw, 1.0rem) !important;
+    }
+
+    .seat .student-name-display.name-3 {
+        font-size: clamp(0.7rem, 3.0vw, 1.0rem) !important;
+    }
+
+    .seat .student-name-display.name-4 {
+        font-size: clamp(0.6rem, 2.5vw, 0.9rem) !important;
+    }
+
+    .seat .student-name-display.name-5 {
+        font-size: clamp(0.5rem, 2.2vw, 0.8rem) !important;
+    }
+    
+    .seat .student-name-display.name-6 {
+        font-size: clamp(0.45rem, 2.0vw, 0.75rem) !important;
+    }
+
+    .seat .student-name-display.name-7 {
+        font-size: clamp(0.4rem, 1.8vw, 0.7rem) !important;
+    }
+
+    .seat .student-name-display.name-8-plus {
+        font-size: clamp(0.35rem, 1.6vw, 0.65rem) !important;
+    }
+
+    /* PDF导出模式下名字显示修正 - 保持换行 */
+    body.pdf-export-mode .seat .student-name-display {
+        white-space: normal !important;
+        overflow: visible !important;
+        text-overflow: clip !important;
+        word-break: keep-all !important;
+        text-align: center !important;
+    }
+
+    /* 座位号微调 */
+    .seat .seat-number {
+        position: absolute !important;
+        top: 1px !important;
+        left: 1px !important;
+        font-size: 0.5rem !important;
+        opacity: 0.6;
+        padding: 0 2px !important;
+    }
+
+    /* 移除按钮微调 */
+    .seat .seat-remove-btn,
+    .seat .seat-delete-btn {
+        width: 16px !important;
+        height: 16px !important;
+        font-size: 10px !important;
+        top: -4px !important;
+        right: -4px !important;
+    }
+
+    /* 讲台：使用百分比宽度 */
+    .podium-shape {
+        width: 80% !important;
+        max-width: 200px !important;
+    }
+
+    /* 修复设置菜单在移动端被裁切的问题 - 改为屏幕居中弹窗 */
+    .layout-settings-dropdown {
+        position: fixed !important;
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        width: 85vw !important;
+        max-width: 320px !important;
+        height: auto !important;
+        max-height: 80vh !important;
+        right: auto !important;
+        margin: 0 !important;
+        overflow-y: auto !important;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.15), 0 0 0 100vh rgba(0,0,0,0.5) !important;
+        border-radius: 12px !important;
+        z-index: 10001 !important; /* 高于 header */
+        -webkit-overflow-scrolling: touch !important;
+        overscroll-behavior: contain;
+    }
+}
+
+/* 针对手机横屏的特别优化 (高度较小) */
+@media (max-width: 900px) and (orientation: landscape) {
+    .classroom-grid {
+        /* 在横屏下，由于高度有限，间距要更小 */
+        gap: 2px !important;
+    }
+
+    .seat .student-name-display {
+        /* 横屏下字体可以稍大一点点，因为宽度够 */
+        font-size: clamp(0.5rem, 1.8vw, 0.8rem) !important;
+    }
+}
+
+/* ==================== 平板横屏布局 ==================== */
+
+/* 所有平板设备的通用设置 */
+@media (orientation: landscape) and (min-width: 768px) and (max-width: 1440px) {
+    /* 主内容区域 - 确保居中，自适应高度 */
+    .main-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: stretch;
+        overflow: hidden;
+    }
+
+    /* 教室容器自适应 */
+    .classroom-container {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        padding: 0.5rem;
+    }
+
+    /* 网格居中并自适应 */
+    .classroom-grid {
+        margin: 0 auto;
+        flex: 1;
+        display: grid;
+        width: 100%;
+    }
+
+    /* 平板端头部按钮居中 */
+    .header {
+        justify-content: center !important;
+        gap: 1rem !important;
+    }
+
+    /* 平板/笔记本端隐藏长促销文案，避免覆盖居中按钮 */
+    .header-promo {
+        display: none !important;
+    }
+
+    .header-left {
+        position: absolute !important;
+        left: 1rem !important;
+    }
+
+    .header-center {
+        justify-content: center !important;
+        flex: 0 1 auto !important;
+    }
+
+    .header-right {
+        position: absolute !important;
+        right: 1rem !important;
+    }
+}
+
+/* 小型平板 (iPad 标准版, 小型 Android 平板) - 768px-1024px 横屏 */
+@media (orientation: landscape) and (min-width: 768px) and (max-width: 1024px) {
+    .main-container {
+        grid-template-columns: 180px 1fr;
+        gap: 0.5rem;
+    }
+
+    /* 左侧学生列表适当缩小 */
+    .sidebar-left {
+        font-size: 0.85rem;
+    }
+
+    .student-item {
+        padding: 0.5rem 0.4rem;
+    }
+
+    .student-name {
+        font-size: 0.8rem;
+    }
+
+    .student-details {
+        font-size: 0.7rem;
+    }
+
+    /* 头部按钮优化 */
+    .header {
+        padding: 0.35rem 0.8rem;
+    }
+
+    .header h1 {
+        font-size: 1.1rem;
+    }
+
+    .header-promo {
+        font-size: 0.55rem;
+    }
+
+    .header-center .btn {
+        padding: 0.25rem 0.45rem;
+        font-size: 0.65rem;
+    }
+
+    .btn-small {
+        padding: 0.2rem 0.35rem;
+        font-size: 0.6rem;
+    }
+}
+
+/* 中型平板 (iPad Air, iPad Pro 11") - 1025px-1280px 横屏 */
+@media (orientation: landscape) and (min-width: 1025px) and (max-width: 1280px) {
+    .main-container {
+        grid-template-columns: 200px 1fr;
+        gap: 0.75rem;
+    }
+
+    /* 左侧学生列表 */
+    .sidebar-left {
+        font-size: 0.9rem;
+    }
+
+    .student-item {
+        padding: 0.55rem 0.45rem;
+    }
+
+    .student-name {
+        font-size: 0.85rem;
+    }
+
+    .student-details {
+        font-size: 0.72rem;
+    }
+
+    /* 头部优化 */
+    .header {
+        padding: 0.4rem 1rem;
+    }
+
+    .header h1 {
+        font-size: 1.15rem;
+    }
+
+    .header-promo {
+        font-size: 0.58rem;
+    }
+
+    .header-center .btn {
+        padding: 0.3rem 0.5rem;
+        font-size: 0.7rem;
+    }
+
+    .btn-small {
+        padding: 0.25rem 0.4rem;
+        font-size: 0.65rem;
+    }
+}
+
+/* 大型平板 (iPad Pro 12.9", Surface Pro) - 1281px-1440px 横屏 */
+@media (orientation: landscape) and (min-width: 1281px) and (max-width: 1440px) {
+    .main-container {
+        grid-template-columns: 220px 1fr;
+        gap: 1rem;
+    }
+
+    /* 左侧学生列表 - 接近原始大小 */
+    .sidebar-left {
+        font-size: 0.95rem;
+    }
+
+    .student-item {
+        padding: 0.6rem 0.5rem;
+    }
+
+    /* 头部优化 */
+    .header {
+        padding: 0.45rem 1.2rem;
+    }
+
+    .header-center .btn {
+        padding: 0.35rem 0.6rem;
+        font-size: 0.75rem;
+    }
+}
+
+/* 响应式设计 - 通用 */
+@media (max-width: 1200px) {
+    .main-container {
+        grid-template-columns: 210px 1fr;
+        gap: 0.5rem;
+        padding: 0.5rem;
+    }
+
+    .header {
+        padding: 0.4rem 1rem;
+    }
+
+    .header h1 {
+        font-size: 1.2rem;
+    }
+
+    .header-center {
+        gap: 0.25rem;
+    }
+
+    .podium-shape {
+        height: 40px;
+    }
+
+    .podium-text {
+        font-size: 0.95rem;
+    }
+}
+
+/* 平板端优化 - 防止按钮叠加 */
+@media (min-width: 768px) and (max-width: 1440px) {
+    .header-center {
+        gap: 0.3rem;
+        flex-wrap: nowrap;
+    }
+
+    .header-center .btn {
+        white-space: nowrap;
+    }
+
+    .header-right {
+        flex-shrink: 0;
+    }
+}
+
+/* ==================== 触摸支持样式 ==================== */
+
+/* 触摸拖拽指示器 */
+.touch-drag-indicator {
+    position: fixed;
+    z-index: 10000;
+    pointer-events: none;
+    user-select: none;
+}
+
+/* 触摸激活状态 */
+.student-item.touch-active {
+    background-color: #e0f2fe;
+    transition: all 0.1s ease;
+}
+
+/* 触摸拖拽中的座位 */
+.seat.touch-dragging {
+    opacity: 0.7;
+    z-index: 999;
+}
+
+/* 触摸拖拽目标高亮 */
+.seat.drag-over {
+    background-color: #dbeafe !important;
+    border: 3px solid #3b82f6 !important;
+    box-shadow: 0 0 15px rgba(59, 130, 246, 0.5) !important;
+    animation: pulse-border 1s ease-in-out infinite;
+}
+
+@keyframes pulse-border {
+    0%, 100% {
+        box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+    }
+    50% {
+        box-shadow: 0 0 25px rgba(59, 130, 246, 0.8);
+    }
+}
+
+/* 触摸设备优化 - 使用 padding 而非固定尺寸 */
+@media (pointer: coarse) {
+    .seat-remove-btn {
+        width: 22px;
+        height: 22px;
+        font-size: 14px;
+    }
+
+    .student-name-display {
+        padding: 6px 8px;
+    }
+
+    .multi-select-btn {
+        padding: 5px 8px;
+        font-size: 0.7rem;
+    }
+
+    /* 按钮触摸优化 - 紧凑尺寸 */
+    .btn {
+        padding: 0.22rem 0.45rem;
+        font-size: 0.72rem;
+    }
+
+    .btn-small {
+        padding: 0.18rem 0.35rem;
+        font-size: 0.62rem;
+    }
+
+    /* 学生列表项触摸优化 */
+    .student-item {
+        padding: 0.5rem;
+    }
+
+    .student-item .btn-edit,
+    .student-item .btn-delete {
+        padding: 0.2rem;
+        font-size: 0.62rem;
+    }
+
+    /* 输入框和选择框触摸优化 */
+    .input-field,
+    .select-field {
+        padding: 0.5rem;
+    }
+
+    /* 颜色选择器触摸优化 */
+    .color-swatch {
+        min-width: 32px;
+        min-height: 32px;
+    }
+}
+
+/* 防止触摸时的文本选择 */
+.classroom-grid,
+.seat,
+.student-name-display {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+}
+
+/* 触摸反馈 */
+@media (hover: none) and (pointer: coarse) {
+    .seat:active {
+        opacity: 0.8;
+    }
+
+    .student-name-display:active {
+        background: rgba(59, 130, 246, 0.15);
+    }
+
+    button:active,
+    .btn:active {
+        opacity: 0.8;
+    }
+
+    /* 学生列表项触摸反馈 */
+    .student-item:active {
+        background: rgba(59, 130, 246, 0.1);
+    }
+
+    /* 输入框和选择框触摸反馈 */
+    .input-field:active,
+    .select-field:active {
+        border-color: #3b82f6;
+    }
+
+    /* 颜色选择器触摸反馈 */
+    .color-swatch:active {
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+    }
+
+    /* 模态框关闭按钮触摸反馈 */
+    .modal-close:active {
+        opacity: 0.7;
+    }
+}
+
+/* 优化触摸滚动 */
+.classroom-grid {
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y pan-x;
+}
+
+/* 拖拽时禁用滚动 */
+.classroom-grid.is-dragging,
+.classroom-grid.is-selecting {
+    touch-action: none !important;
+    overflow: hidden;
+}
+
+/* ==================== iPad 竖屏提示样式 ==================== */
+.orientation-warning {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    z-index: 10000;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: white;
+    text-align: center;
+    padding: 2rem;
+}
+
+.orientation-warning-icon {
+    font-size: 5rem;
+    margin-bottom: 2rem;
+    animation: rotate-device 2s ease-in-out infinite;
+}
+
+.orientation-warning h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.orientation-warning p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+    max-width: 500px;
+    line-height: 1.6;
+}
+
+@keyframes rotate-device {
+    0%, 100% {
+        transform: rotate(0deg);
+    }
+    25% {
+        transform: rotate(-90deg);
+    }
+    75% {
+        transform: rotate(-90deg);
+    }
+}
+
+/* 所有平板竖屏时显示提示，隐藏主内容 */
+@media (orientation: portrait) and (min-width: 768px) and (max-width: 1440px) {
+    .orientation-warning {
+        display: flex !important;
+    }
+
+    .header,
+    .main-container {
+        display: none !important;
+    }
+}
+
+/* ============ 移动设备响应式布局 ============ */
+
+/* ==================== 修改开始：强制手机端横屏 ==================== */
+
+/* 1. 手机竖屏 (宽度 < 768px 且 处于竖屏状态) */
+@media (max-width: 767px) and (orientation: portrait) {
+    /* 强制显示"请横屏"提示 */
+    .orientation-warning {
+        display: flex !important;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 99999;
+    }
+
+    /* 强制隐藏所有应用内容 */
+    .header,
+    .main-container,
+    .modal,
+    #studentModal,
+    #seatingSettingsModal,
+    #layoutSettingsModal,
+    #importExcelModal,
+    #constraintsModal,
+    #exportFormatModal,
+    #excelPreviewModal {
+        display: none !important;
+    }
+}
+
+/* ==================== 修改结束 ==================== */
+
+/* 手机和小平板的通用样式（竖屏时会被上面的 display:none 覆盖） */
+@media (max-width: 767px) {
+    /* 主容器布局 */
+    .main-container {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    /* 左侧面板调整 */
+    .sidebar-left {
+        width: 100%;
+        min-height: 35vh;
+        max-height: 40vh;
+        border-right: none;
+        border-bottom: 1px solid #ddd;
+        overflow-y: auto;
+    }
+
+    /* 中央内容调整 */
+    .main-content {
+        width: 100%;
+        flex: 1;
+        min-height: 60vh;
+        overflow-y: auto;
+    }
+
+    /* 头部响应式 - 采用二行三列的堆叠布局 */
+    .header {
+        display: flex !important;
+        justify-content: center !important;
+        align-items: stretch !important;
+        flex-wrap: wrap !important;
+        gap: clamp(4px, 1vw, 8px) !important;
+        padding: clamp(6px, 1.5vw, 8px) !important;
+        flex-direction: column !important;
+    }
+
+    /* 隐藏标题和促销文本 */
+    .header-left {
+        display: none !important;
+    }
+
+    .header h1 {
+        font-size: 1rem;
+    }
+
+    .header-promo {
+        display: none;
+    }
+
+    /* 六个按钮行：宽度100%，按钮水平居中 */
+    .header-center {
+        width: 100% !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        gap: clamp(2px, 0.8vw, 5px) !important;
+        position: relative !important;
+        transform: none !important;
+        left: auto !important;
+        flex-wrap: wrap !important;
+        flex-shrink: 0 !important;
+        row-gap: clamp(2px, 0.5vh, 4px) !important;
+    }
+
+    /* 规则按钮行：单独一行，右对齐或居中 */
+    .header-right {
+        width: 100% !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        gap: clamp(3px, 1vw, 6px) !important;
+        position: relative !important;
+        transform: none !important;
+        left: auto !important;
+        flex-shrink: 0 !important;
+    }
+
+    /* 头部按钮紧凑尺寸 - 六个按钮需要极致紧凑 */
+    .header-center .btn {
+        padding: 0.12rem 0.25rem !important;
+        font-size: 0.55rem !important;
+        white-space: nowrap !important;
+        flex-shrink: 0 !important;
+        min-width: max-content !important;
+    }
+
+    .header-right .btn {
+        padding: 0.15rem 0.3rem !important;
+        font-size: 0.6rem !important;
+        white-space: nowrap !important;
+    }
+
+    .btn-small {
+        padding: 0.14rem 0.28rem;
+        font-size: 0.58rem;
+    }
+
+    /* 教室容器调整 */
+    .classroom-container {
+        max-width: 100%;
+        margin: clamp(4px, 2vw, 8px) auto;
+        padding: clamp(4px, 2vw, 8px);
+    }
+
+    .classroom-header {
+        flex-wrap: wrap;
+        gap: clamp(4px, 1.5vw, 8px);
+        font-size: var(--font-size-base);
+    }
+
+    /* 允许显示多选工具栏（移动端不再强制隐藏） */
+    /* 原本在移动端隐藏的样式已移除，保留默认样式 */
+
+    /* 隐藏框选相关功能 */
+    .selection-box {
+        display: none !important;
+    }
+
+    /* 学生列表调整 */
+    .student-list {
+        max-height: calc(35vh - 120px);
+    }
+
+    .student-item {
+        padding: 8px;
+        font-size: 12px;
+    }
+
+    .student-item-name {
+        font-size: 12px;
+    }
+
+    /* 模态框全屏 */
+    .modal-content {
+        width: 95%;
+        max-height: 90vh;
+        margin: 5% auto;
+    }
+
+    /* 确保导出模态框在移动端正常显示 */
+    #exportFormatModal {
+        z-index: 10000 !important;
+    }
+
+    #exportFormatModal .modal-content {
+        z-index: 10001 !important;
+        position: relative;
+    }
+
+    /* 确保导出按钮在移动端可点击 */
+    .export-option-btn {
+        min-height: 55px !important;
+        padding: 0.8rem 0.6rem !important;
+        touch-action: manipulation !important;
+        pointer-events: auto !important;
+        cursor: pointer !important;
+        position: relative;
+        z-index: 10002 !important;
+    }
+
+    .export-option-btn:active {
+        background: #e0e7ff !important;
+        transform: scale(0.98);
+    }
+
+    /* 确保所有模态框内的按钮可点击 */
+    .modal button,
+    .modal .btn {
+        pointer-events: auto !important;
+        touch-action: manipulation !important;
+    }
+
+    /* 坐标显示在小屏幕隐藏 */
+    .seat-coordinate {
+        font-size: 7px;
+        display: none;
+    }
+
+    /* 设置面板调整 */
+    .settings-dropdown-content {
+        width: 90vw;
+        max-width: 300px;
+        right: 5vw;
+    }
+
+    /* 旋转按钮调整 */
+    .rotation-buttons-header {
+        gap: 1px;
+    }
+
+    .rotation-btn-header {
+        padding: 3px 5px;
+        font-size: 10px;
+    }
+
+    /* 学生统计 */
+    .student-stats {
+        flex-direction: row;
+        gap: 8px;
+        font-size: 11px;
+    }
+
+    .stat {
+        flex: 1;
+    }
+
+    /* ==================== 手机竖屏小屏幕优化 (< 400px) ==================== */
+    /* 超小屏幕手机，优化按钮显示 */
+    @media (max-width: 399px) {
+        .header-center .btn {
+            padding: 0.1rem 0.2rem !important;
+            font-size: 0.5rem !important;
+            letter-spacing: -0.5px !important;
+        }
+
+        .header-center {
+            gap: clamp(1px, 0.5vw, 3px) !important;
+            row-gap: clamp(1px, 0.3vh, 2px) !important;
+        }
+    }
+
+    /* ==================== 手机竖屏中等屏幕优化 (400px - 500px) ==================== */
+    @media (min-width: 400px) and (max-width: 500px) {
+        .header-center .btn {
+            padding: 0.12rem 0.25rem !important;
+            font-size: 0.55rem !important;
+        }
+    }
+
+    /* ==================== 手机竖屏较大屏幕优化 (500px - 767px) ==================== */
+    @media (min-width: 501px) and (max-width: 767px) {
+        .header-center .btn {
+            padding: 0.14rem 0.28rem !important;
+            font-size: 0.58rem !important;
+        }
+
+        .header-center {
+            gap: clamp(3px, 1vw, 6px) !important;
+        }
+    }
+}
+
+/* ==================== 手机横屏布局 ==================== */
+/* 手机横屏 (宽度 < 768px, 横屏方向) - 使用双列布局 */
+@media (max-width: 767px) and (orientation: landscape) {
+    /* 隐藏旋转提示 */
+    .orientation-warning {
+        display: none !important;
+    }
+
+    /* 恢复显示头部 */
+    .header {
+        display: flex !important;
+    }
+
+    /* 主容器：改回 Grid 双列布局 */
+    .main-container {
+        display: grid !important;
+        grid-template-columns: 150px 1fr !important;
+        flex-direction: row !important;
+        gap: 0.5rem;
+        height: calc(100vh - 50px);
+    }
+
+    /* 左侧面板：固定宽度，垂直滚动 */
+    .sidebar-left {
+        width: 150px !important;
+        min-height: auto !important;
+        max-height: 100% !important;
+        border-right: 1px solid #ddd !important;
+        border-bottom: none !important;
+        overflow-y: auto;
+        flex-shrink: 0;
+    }
+
+    /* 右侧内容区：占满剩余空间 */
+    .main-content {
+        width: 100% !important;
+        flex: 1 !important;
+        min-height: auto !important;
+        height: 100%;
+        overflow: hidden;
+    }
+
+    /* 头部紧凑布局 */
+    .header {
+        flex-wrap: nowrap !important;
+        padding: 0.3rem 0.5rem !important;
+        height: 50px;
+    }
+
+    .header h1 {
+        font-size: 0.9rem !important;
+    }
+
+    .header-right {
+        width: auto !important;
+        justify-content: flex-end !important;
+        gap: 0.25rem !important;
+        position: relative !important;
+        transform: none !important;
+        left: auto !important;
+    }
+
+    .header-center {
+        position: absolute !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        gap: 0.25rem !important;
+        width: auto !important;
+        z-index: 10 !important;
+    }
+
+    .header-center .btn,
+    .header-right .btn {
+        padding: 0.14rem 0.32rem !important;
+        font-size: 0.55rem !important;
+    }
+
+    .btn-small {
+        padding: 0.1rem 0.22rem !important;
+        font-size: 0.5rem !important;
+    }
+
+    /* 教室容器：填满可用空间 */
+    .classroom-container {
+        width: 100% !important;
+        height: 100% !important;
+        margin: 0 !important;
+        padding: 0.5rem !important;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* 教室网格：自适应填满 */
+    .classroom-grid {
+        flex: 1 !important;
+        width: 100% !important;
+        height: 100% !important;
+        padding: 0.5rem !important;
+        gap: clamp(4px, 1vw, 8px) !important;
+    }
+
+    /* 座位：保持合理比例 */
+    .seat {
+        width: 100% !important;
+        height: 100% !important;
+        min-width: 0 !important;
+        min-height: 0 !important;
+    }
+
+    /* 学生列表紧凑 */
+    .student-list {
+        max-height: calc(100vh - 150px) !important;
+    }
+
+    .student-item {
+        padding: 0.4rem !important;
+        font-size: 0.7rem !important;
+    }
+
+    .student-name {
+        font-size: 0.75rem !important;
+    }
+
+    .student-details {
+        font-size: 0.65rem !important;
+    }
+
+    /* 隐藏不必要的元素以节省空间 */
+    .header-promo {
+        display: none !important;
+    }
+
+    .orientation-warning {
+        display: none !important;
+    }
+
+    /* 允许显示多选工具栏（移动端不再强制隐藏） */
+    /* 保留默认样式以支持多选操作 */
+
+    /* 座位号字体调整 */
+    .seat-number {
+        font-size: 0.6rem !important;
+    }
+
+    .student-name-display {
+        font-size: 0.75rem !important;
+    }
+}
+
+/* 手机横屏和小平板 (宽度 768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+    /* 保持两列布局，但使用更紧凑的比例 */
+    .main-container {
+        grid-template-columns: clamp(160px, 25vw, 200px) 1fr;
+    }
+
+    .header-promo {
+        display: none;
+    }
+}
+
+/* 隐藏移动设备上不支持的功能 */
+@media (max-width: 1023px) {
+    /* 禁用框选多个座位 */
+    .classroom-grid {
+        user-select: none;
+    }
+
+    /* 允许多选工具栏在移动端显示 */
+    /* 删除强制隐藏，支持点击多选与批量操作 */
+
+    /* 保留多选视觉效果以便用户识别选中状态 */
+
+    /* 保留拖拽提示图标以增强多选交互反馈 */
+
+    /* 隐藏选择框（框选功能） */
+    .selection-box {
+        display: none !important;
+    }
+
+    /* 简化设置 */
+    .classroom-info {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+}
+
+/* ==================== 移动端交互终极修复 ==================== */
+/* 解决iOS Safari长按弹出"复制/搜索/分享/放大镜"菜单的问题 */
+
+/* 1. 全局禁用长按菜单和文本选择（针对主容器） */
+.classroom-grid,
+.seat,
+.seat *,
+.student-name-display,
+.student-item,
+.student-item * {
+    -webkit-touch-callout: none !important; /* 核心：禁用iOS长按菜单 */
+    -webkit-user-select: none !important;   /* 禁用选择 */
+    -khtml-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+    -webkit-tap-highlight-color: rgba(0,0,0,0) !important; /* 移除点击高亮 */
+}
+
+/* 2. 确保文字完全不可交互，让点击穿透到 seat div */
+.student-name-display {
+    pointer-events: none !important;
+}
+
+/* 3. 强制 seat 元素独占触控事件 */
+.seat {
+    touch-action: none !important;
+    position: relative; /* 确保 z-index 生效 */
+}
+
+/* 4. 学生列表中的姓名文字也需要穿透 */
+.student-item .student-name,
+.student-item .student-details {
+    pointer-events: none !important;
+}
+
+/* 5. 修复可能导致误触的输入框 - 只有输入框允许选择和长按 */
+input, textarea {
+    -webkit-user-select: auto !important;
+    user-select: auto !important;
+    -webkit-touch-callout: default !important;
+}
+
+/* ==================== 终极修正补丁 (粘贴到文件最末尾) ==================== */
+
+/* 1. 通用横屏补丁 (所有设备) - 只隐藏提示，保留主要内容 */
+@media (orientation: landscape) {
+    .orientation-warning {
+        display: none !important;
+        z-index: -1 !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+    }
+
+    .header,
+    .main-container {
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+}
+
+/* 2. 手机横屏 (<768px) - 保持垂直按钮布局 */
+@media (max-width: 767px) and (orientation: landscape) {
+    .header {
+        display: flex !important;
+        flex-direction: column !important; /* ← 关键：手机横屏仍需垂直布局，保持按钮居中 */
+        justify-content: center !important;
+        align-items: center !important;
+    }
+
+    .main-container {
+        display: grid !important;
+        grid-template-columns: 160px 1fr !important; /* 使用双列布局 */
+    }
+}
+
+/* 3. 平板/桌面横屏 (≥768px) - 使用水平布局 */
+@media (min-width: 768px) and (orientation: landscape) {
+    .header {
+        display: flex !important;
+        flex-direction: row !important; /* 平板以上使用水平布局 */
+        justify-content: space-between !important;
+        align-items: center !important;
+    }
+
+    .main-container {
+        display: flex !important;
+    }
+}
+
+/* 平板/笔记本横屏：使用三段式 flex 居中按钮，避免绝对定位在窄屏下偏移 */
+@media (orientation: landscape) and (min-width: 768px) and (max-width: 1440px) {
+    .header-left,
+    .header-right {
+        position: static !important;
+        flex-shrink: 0 !important;
+    }
+
+    .header-center {
+        position: static !important;
+        left: auto !important;
+        transform: none !important;
+        flex: 1 1 auto !important;
+        min-width: 0 !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        margin: 0 auto !important;
+    }
+}
+
+/* ==================== PDF导出修正 (通用移动端) ==================== */
+@media screen and (max-width: 1024px) {
+    /* 确保容器作为定位基准，防止页脚跑偏 */
+    body.pdf-export-mode .classroom-container {
+        position: relative !important;
+        height: auto !important; /* 允许高度自适应 */
+        min-height: 100% !important;
+        overflow: visible !important; /* 防止内容被剪裁 */
+        padding-bottom: 60px !important; /* 底部预留充足空间给页脚 */
+        background-color: white !important; /* 确保背景纯白 */
+    }
+
+    /* 关键修正：导出模式下网格高度自适应，不再强制撑满 */
+    body.pdf-export-mode .classroom-grid {
+        height: auto !important;
+        min-height: auto !important;
+        aspect-ratio: auto !important;
+        overflow: visible !important;
+    }
+
+    /* 调整页脚位置和大小，提高优先级覆盖 print.css */
+    html body.pdf-export-mode .print-footer {
+        position: relative !important; /* 改为相对定位，作为静态流元素 */
+        align-self: flex-start !important; /* 左对齐 */
+        margin-top: 35px !important; /* 增加与座位网格的间距 */
+        margin-left: 10px !important; /* 左侧边距 */
+        width: auto !important;
+        height: auto !important;
+        transform: none !important;
+        z-index: 9999 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        opacity: 1 !important;
+        text-align: left !important;
+        background: transparent !important; /* 移除背景色，保持简洁 */
+        padding: 0 !important;
+    }
+    
+    html body.pdf-export-mode .print-brand {
+        font-size: 14px !important;
+        font-weight: bold !important;
+        color: #333 !important;
+        line-height: 1.4 !important;
+        display: block !important;
+    }
+    
+    html body.pdf-export-mode .print-url {
+        font-size: 10px !important;
+        color: #999 !important;
+        font-family: Arial, sans-serif !important;
+        display: block !important;
+        margin-top: 2px !important;
+    }
+}
+
+/* 2. 专门针对手机横屏的布局修正 (强制覆盖之前的任何隐藏逻辑) */
+@media (max-width: 950px) and (orientation: landscape) {
+    .main-container {
+        display: grid !important; /* 手机横屏采用 Grid 双列布局 */
+        grid-template-columns: 160px 1fr !important;
+        height: 100vh !important;
+        overflow: hidden !important;
+    }
+
+    /* 确保头部显示 */
+    .header {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+    }
+
+    /* 确保模态框等功能层不被隐藏 */
+    .modal {
+        display: flex; /* 这里不能加!important，否则 JS 无法控制 toggle，但在横屏下默认要是可用的状态 */
+    }
+
+    /* 只有当 JS 设置 display: none 时才隐藏，CSS 不主动隐藏它 */
+    .modal[style*="display: none"] {
+        display: none !important;
+    }
+}
+
+/* 3. 只有在真正的"手机竖屏"情况下，才显示拦截提示 */
+@media (max-width: 768px) and (orientation: portrait) {
+    .orientation-warning {
+        display: flex !important;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 999999;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    /* 竖屏时隐藏内容 */
+    .header,
+    .main-container {
+        display: none !important;
+    }
+}
+
+/* ==================== 平板端终极优化补丁 (修正侧边栏过宽问题) ==================== */
+
+/* 针对所有平板横屏 (iPad, Android平板) 范围：768px - 1440px */
+@media (min-width: 768px) and (max-width: 1440px) {
+
+    /* 1. 调整整体布局比例：左侧固定200px，右侧占满剩余 */
+    .main-container {
+        display: grid !important;
+        /* 关键修改：将左侧栏固定为 200px，平衡文字显示和座位空间 */
+        grid-template-columns: 200px 1fr !important;
+        gap: 8px !important; /* 减小左右两栏的间距 */
+        padding: 5px !important; /* 减小最外层边距 */
+        height: 100vh !important;
+        overflow: hidden !important;
+    }
+
+    /* 2. 左侧侧边栏内容适配 */
+    .sidebar-left {
+        width: 200px !important; /* 强制宽度 */
+        font-size: 0.85rem !important; /* 稍微增大字体以提高可读性 */
+    }
+
+    /* 侧边栏内的按钮变小，防止换行 */
+    .panel-actions .btn {
+        padding: 4px 6px !important;
+        font-size: 0.7rem !important;
+    }
+
+    /* 3. 右侧座位区域：消除桌面端的大内边距 */
+    .classroom-grid {
+        /* 关键：覆盖 desktop.css 中的 6% padding，改为极小的 padding */
+        padding: 10px !important;
+
+        /* 布局设置 */
+        display: grid !important;
+        /* 关键修复：不覆盖 grid-template-columns，让 JS 动态设置列数 */
+        /* grid-template-columns 由 JavaScript 设置为 repeat(8, 1fr) 等 */
+        grid-auto-rows: minmax(0, 1fr) !important;
+        gap: 4px !important; /* 座位间距紧凑 */
+
+        /* 强制宽高 */
+        width: 100% !important;
+        height: 100% !important;
+        min-height: 0 !important;
+        overflow: hidden !important;
+        border: 1px solid #ccc !important;
+    }
+
+    /* 4. 座位本体优化：拉伸填满网格 */
+    .seat {
+        width: auto !important; /* 自动宽度 */
+        height: auto !important; /* 自动高度 */
+        aspect-ratio: 2.2 / 1 !important; /* 稍微扁一点，增加宽度感 */
+        min-width: 0 !important;
+        min-height: 0 !important;
+        margin: 0 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+    /* PDF导出模式下座位样式修正 */
+    body.pdf-export-mode .seat {
+        overflow: visible !important;
+    }
+
+    /* 5. 名字字体自适应 - 修正平板/横屏模式下字体过小的问题 */
+    .seat .student-name-display {
+        /* 默认 (1-2个字) - 增大字号 */
+        font-size: clamp(0.85rem, 2.5vw, 1.2rem) !important;
+        white-space: nowrap !important;
+        width: 100% !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        position: static !important;
+        transform: none !important;
+        line-height: 1.2 !important;
+    }
+
+    /* 添加不同长度名字的适配规则 */
+    .seat .student-name-display.name-2 {
+        font-size: clamp(0.85rem, 2.5vw, 1.2rem) !important;
+    }
+
+    .seat .student-name-display.name-3 {
+        font-size: clamp(0.85rem, 2.5vw, 1.2rem) !important;
+    }
+
+    .seat .student-name-display.name-4 {
+        font-size: clamp(0.65rem, 2.0vw, 1.0rem) !important;
+    }
+
+    .seat .student-name-display.name-5 {
+        font-size: clamp(0.55rem, 1.8vw, 0.9rem) !important;
+    }
+    
+    .seat .student-name-display.name-6 {
+        font-size: clamp(0.5rem, 1.6vw, 0.8rem) !important;
+    }
+
+    .seat .student-name-display.name-7 {
+        font-size: clamp(0.45rem, 1.4vw, 0.75rem) !important;
+    }
+
+    .seat .student-name-display.name-8-plus {
+        font-size: clamp(0.4rem, 1.2vw, 0.7rem) !important;
+    }
+
+    /* PDF导出模式下名字显示修正 - 允许换行和居中 */
+    body.pdf-export-mode .seat .student-name-display {
+        white-space: normal !important;
+        overflow: visible !important;
+        text-overflow: clip !important;
+        word-break: keep-all !important;
+        text-align: center !important;
+    }
+
+    /* 6. 隐藏平板上不必要的装饰元素 */
+    .header-promo {
+        display: none !important;
+    }
+
+    /* 保留排座规则按钮，但调整其样式使其更紧凑 */
+    .header-right {
+        display: flex !important;
+        align-items: center !important;
+        flex-shrink: 0 !important;
+        margin-left: auto !important;
+    }
+
+    .header-right .btn {
+        padding: 0.25rem 0.5rem !important;
+        font-size: 0.7rem !important;
+        white-space: nowrap !important;
+    }
+
+    /* 调整头部高度，防止占用过多垂直空间 */
+    .header {
+        padding: 4px 10px !important;
+        height: 40px !important;
+        min-height: 40px !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        gap: 0.5rem !important;
+    }
+
+    .header h1 {
+        font-size: 1rem !important;
+        flex-shrink: 0 !important;
+    }
+
+    /* 确保header-center也能适应 */
+    .header-center {
+        flex-shrink: 1 !important;
+        min-width: 0 !important;
+        position: relative !important;
+        transform: none !important;
+        left: auto !important;
+    }
+}
+
+/* --- css/mobile.css 文件末尾追加 --- */
+
+/* 1. 允许学生列表垂直滚动，但禁止文字被选中 */
+.student-item {
+    touch-action: pan-y !important; /* 关键：允许垂直滚动，把水平滑动留给JS处理 */
+    user-select: none !important;
+    -webkit-user-select: none !important;
+    position: relative; /* 为内部元素定位做准备 */
+}
+
+/* 2. 拖拽时的"影子"元素样式 */
+.drag-mirror {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 99999; /* 保证在最顶层 */
+    background: rgba(255, 255, 255, 0.95);
+    border: 2px solid #3b82f6;
+    border-radius: 8px;
+    padding: 8px 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    font-size: 14px;
+    font-weight: bold;
+    color: #1e293b;
+    pointer-events: none !important; /* 核心：让事件穿透影子，触发下方座位的接收 */
+    transform: translate(-50%, -120%); /* 让影子位于手指上方，不遮挡视线 */
+    white-space: nowrap;
+    width: auto !important;
+    display: block !important;
+}
+
+/* --- 在 css/mobile.css 文件最末尾添加以下代码 --- */
+
+/* ==================== 搜索栏布局修复 ==================== */
+
+/* 1. 调整搜索栏容器，强制不换行且适应宽度 */
+.student-controls {
+    display: flex !important;
+    flex-wrap: nowrap !important; /* 强制并排 */
+    gap: 4px !important;          /* 减小间距 */
+    padding: 6px 4px !important;  /* 减小内边距，腾出更多空间 */
+    width: 100% !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;  /* 防止溢出 */
+}
+
+/* 2. 核心修复：移除输入框的最小宽度限制 */
+.student-controls .input-field,
+.student-controls .select-field {
+    min-width: 0 !important;      /* 关键！允许输入框无限缩小以适应容器 */
+    width: auto !important;
+    font-size: 12px !important;   /* 缩小字号 */
+    padding: 4px 6px !important;  /* 减小内填充 */
+    height: 30px !important;      /* 固定较小的高度 */
+}
+
+/* 3. 重新分配宽度比例 */
+/* 搜索框占 55% 左右 */
+.student-controls #searchStudent {
+    flex: 5 !important;
+}
+
+/* 筛选下拉框占 45% 左右 */
+.student-controls #filterStudents {
+    flex: 4 !important;
+    padding-right: 0 !important; /* 减少下拉箭头的空间占用 */
+}
+
+/* ==================== 多选工具栏桌面端隐藏 ==================== */
+/* 仅在移动端隐藏多选工具栏 */
+@media (max-width: 1023px) {
+    #multiSelectToolbar {
+        display: none !important;
+    }
+}
+
+/* 确保桌面端显示 */
+@media (min-width: 1024px) {
+    #multiSelectToolbar {
+        display: none;  /* 默认隐藏 */
+    }
+    
+    #multiSelectToolbar.show {
+        display: flex !important;  /* 有选中时显示 */
+    }
+}
+
+/* ==================== 修复移动端设置菜单显示问题 ==================== */
+/* 确保设置菜单在移动端完整显示，不被裁切，且可滚动 */
+@media (max-width: 1023px) {
+    .layout-settings-dropdown {
+        position: fixed !important;
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        width: 85vw !important;
+        max-width: 320px !important;
+        height: auto !important;
+        max-height: 80vh !important;
+        right: auto !important;
+        margin: 0 !important;
+        overflow-y: auto !important;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.15), 0 0 0 100vh rgba(0,0,0,0.5) !important;
+        border-radius: 12px !important;
+        z-index: 10001 !important; /* 高于 header */
+        /* display 由 JS 控制，但我们添加 !important 覆盖 desktop 样式 */
+        flex-direction: column !important;
+        padding: 15px !important;
+        background: #fff !important;
+    }
+
+    /* 确保当 JS 设置为 block 时，我们使用 block 或 flex */
+    /* 注意：JS可能会设置 style="display: block"，我们需要确保可见性 */
+    .layout-settings-dropdown[style*="display: block"] {
+        display: flex !important;
+    }
+
+    /* 确保颜色选择区域可见 */
+    .layout-settings-item {
+        width: 100% !important;
+        margin-bottom: 10px !important;
+        flex-shrink: 0 !important; /* 防止被压缩 */
+        display: block !important; /* 确保不被隐藏 */
+    }
+    
+    .color-setting-section {
+        display: block !important;
+        width: 100% !important;
+    }
+
+    /* 确保颜色样本换行显示 */
+    .color-swatches {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        gap: 8px !important;
+        width: 100% !important;
+    }
+    
+    /* 增加底部内边距，防止最后一个元素贴底 */
+    .layout-settings-dropdown::after {
+        content: "";
+        display: block;
+        height: 20px;
+        width: 100%;
+        flex-shrink: 0;
+    }
+}
